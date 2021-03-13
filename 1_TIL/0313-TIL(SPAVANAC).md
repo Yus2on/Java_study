@@ -58,13 +58,12 @@ Note: if you are unfamiliar with 24-hour time notation yourself, you might be in
 
 ### 문제풀이
 
-- `ArrayList` 생성 
-- 문제에서 배열 원소는 0 ~ 9의 정수라고 했으니 값이 10인 변수를 생성해 비교
-  - 배열의 원소와 변수를 비교 
-  - 같지 않다면 리스트에 원소를 추가 -> 변수의 값을 배열의 원소로 초기화
-  - 이렇게 하면 중복값을 걸러낼 수 있다
-- 배열을 `ArrayList.size()` 로 지정 
-- 반복문을 통해 리스트의 value 값을 가져와 배열의 i 번째로 넣어준다 
+- 24시간 표현 사용
+- 입력은 공백 한 칸을 기준으로 구분 되고 출력시 불필요한 0은 사용하지 않음 
+- BufferedReader 로 입력받아 연산
+  - 입력받은 분 (m) 을 45 기준으로 보다 작으면 시간(h) 를 -1 해주고
+  - 아닐 경우에는 m - 45 를 해준다
+  - h가 0보다 작으면 24시간 표현이기 때문에 23으로 수정 필요 
 
 ```java
 import java.io.*;
@@ -73,20 +72,20 @@ import java.io.*;
 // 24 시간 표기법으로 45 분 전에 새 타임 스탬프를 인쇄하십시오.
 // 0:00 (자정)에서 시작하여 23:59 (자정 1 분 전)로 끝
 
-
 class Main {
     public static void main (String [] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] str = br.readLine().split(" ");
-        int h = Integer.parseInt(str[0]);
-        int m = Integer.parseInt(str[1]);
+      
+        int h = Integer.parseInt(str[0]); // 시간
+        int m = Integer.parseInt(str[1]); // 분 
         
-        if(m < 45) {
-            h --;
-            m = 60 - (45 - m);
+        if (m < 45) { // 1. 입력받은 분이 45 보다 작은지 체크
+            h --; // 1-2. 작다면 시간을 1 감소 
+            m = 60 - (45 - m); // 분 감소 
             
-            if (h < 0) {
-                h = 23;
+            if (h < 0) { // 2. 시간이 0보다 작은지 체크
+                h = 23; // 작다면 시간을 23으로 변경
             }
             
             System.out.println(h + " " + m);
@@ -98,21 +97,10 @@ class Main {
 
 ```
 
-
-
 <br>
-
-
 
 ### 정리
 
-- 맨 처음 이중 for문과 while() 등만 생각 -> 각 문제에 맞는 방법을 바로 떠올리기 어려움
-  - 문제를 **제대로** 읽고 이해하는 능력 필요.... -> 글로 풀이를 읽고 구현하는 시간 
-- **문제 해결 전략**
-  - 비슷한 문제를 풀어봤나?
-  - 단순한 방법에서 시작할 수 있나?
-  - 문제를 단순화 시킬 수 있나?
-  - 그림으로 그려볼 수 있나?
-  - 문제 분해가 가능한가?
-  - 뒤에서부터, 혹은 순서를 강제할 수 있나?
-
+- `readLine()` 을 통해 입력 받으면 한 행을 전부 읽기 때문에 공백을 단위로 분리해준다.
+- **split(" ")** 을 이용해서 공백 단위로 나눠준 뒤 String 배열로 저장 -> 첫번째를 시간, 두번째를 분으로 저장했다.
+- 문제를 보고 따로 종이에 정리하지 않고서는 바로 해결법을 찾을 수 없는데, 익숙해지면 쓰지 않아도 풀 수 있을까. 정진해야겠다.
